@@ -51,7 +51,7 @@ columns_to_analyze = col_bykv
 # Function to analyze string column 
 def analyze_column(column):
     # Form SQL query to select ID and values from the column
-    query = text(f"SELECT {column}, COUNT(*) as o_count FROM ml_daup.canvas_osago_contract GROUP BY {column}")
+    query = text(f"SELECT {column}, COUNT(*) as o_count FROM osago_contract GROUP BY {column}")
 
     # Connect to the database and execute query
     with engine.connect() as connection:
@@ -81,7 +81,7 @@ columns_to_analyze = col_chisl
 # Function to analyze numeric column 
 def analyze_column(column):
     # Form SQL query to select ID and values from the column
-    query = text(f"SELECT {column}, COUNT(*) as o_count FROM ml_daup.canvas_osago_contract GROUP BY {column}")
+    query = text(f"SELECT {column}, COUNT(*) as o_count FROM osago_contract GROUP BY {column}")
 
     # Connect to the database and execute query
     with engine.connect() as connection:
@@ -110,7 +110,7 @@ numerical_columns = col_chisl
 # Process each column one by one
 for column in numerical_columns:
     # Form SQL query to select values and their frequencies
-    query = text(f"SELECT {column}, COUNT(*) as o_count FROM ml_daup.canvas_osago_contract GROUP BY {column}")
+    query = text(f"SELECT {column}, COUNT(*) as o_count FROM osago_contract GROUP BY {column}")
     
     # Connect to the database and execute query
     with engine.connect() as connection:
