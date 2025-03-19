@@ -1,46 +1,77 @@
-# Outlier_cleaning_from_DB
+# Outlier_Cleaning_from_DB
+
 ## Description
-This program performs outlier detection and cleaning on database columns containing both categorical and numerical data. It retrieves data from a specified Oracle database, analyzes it for rare or infrequent values, as well as outliers, and returns the results for further inspection or data cleansing. The program uses SQL queries to extract the relevant data from the database and then applies statistical methods to detect and handle outliers. Additionally, it checks for the presence of invalid (non-numeric) values in numerical columns.
+This program is designed to detect and analyze outliers and rare values in both categorical (string) and numerical columns of an Oracle database table. It retrieves data, identifies infrequent values, and applies statistical methods to detect outliers, providing a clear overview for further data cleansing and quality improvement.
 
 ## Functional Description
 The program performs the following steps:
-1. Retrieves data from the database.
-2. Analyzes string columns for rare values (less than a specified frequency).
-3. Detects outliers in numerical columns using IQR (Interquartile Range) and Grubbs’ test.
-4. Separates invalid (non-numeric) values in numerical columns for further inspection.
-5. Outputs the results in a format that shows rare values and outliers for further analysis.
+
+1. **Database Connection**: Connects to an Oracle database using SQLAlchemy.
+2. **Rare Value Detection in String Columns**: Checks categorical columns for rare values (values appearing fewer than 5 times).
+3. **Outlier Detection in Numeric Columns**: Uses statistical methods (Grubbs’ test) to detect outliers in numerical columns.
+4. **Results Display**: Displays detected rare values and outliers for inspection.
 
 ## How It Works
-1. The program connects to an Oracle database using SQLAlchemy and executes queries to retrieve the necessary data.
-2. For string columns, it checks for rare values (values that appear fewer than 5 times) and displays them.
-3. For numerical columns, it identifies and handles outliers using statistical methods like the IQR method and Grubbs’ test.
-4. The results are then displayed in a readable format for further processing.
+
+1. **Connection Setup**:
+   - Uses SQLAlchemy to establish a connection to the Oracle database.
+   - Credentials (username, password, DSN) need to be configured.
+
+2. **Categorical Columns Analysis**:
+   - Executes SQL queries to count occurrences of each unique value.
+   - Filters and displays values appearing fewer than 5 times.
+
+3. **Numerical Columns Analysis**:
+   - Applies **Grubbs' test** to detect statistical outliers.
+   - Outputs whether the dataset contains outliers based on calculated critical values.
+
+4. **Results Display**:
+   - Uses `pandas` and `IPython.display` for easy visualization of rare values.
+   - Provides clear output messages for each column.
 
 ## Input Structure
-To run the program, the following parameters need to be provided:
-1. Database credentials: Username, Password, Database DSN (Data Source Name)
-2. Column categories: String columns to check for rare values, Numerical columns to check for outliers.
-The program is designed to work with a specific table in the Oracle database: ml_daup.canvas_osago_contract.
+
+- **Database Credentials**:
+  - `username`: Your database username
+  - `password`: Your database password
+  - `dsn`: Data Source Name (connection string)
+
+- **Columns Categories**:
+  - `col_id`: Columns with unique IDs
+  - `col_bykv`: Columns with string/categorical data
+  - `col_pyst`: Empty or nullable columns
+  - `col_data`: Columns containing date values
+  - `col_chisl`: Columns with numeric data
+
+These columns are specified at the beginning of the script and can be modified as needed.
 
 ## Technical Requirements
-To run the program, the following are required:
-1. Python 3.x
-2. Installed libraries: sqlalchemy, pandas, numpy, scipy, IPython
-3. Oracle Database with the following table: ml_daup.canvas_osago_contract, which contains relevant columns to be analyzed.
+
+- Python 3.x
+- Oracle Database (table: `osago_contract`)
+- Installed Python libraries:
+  - `sqlalchemy`
+  - `pandas`
+  - `numpy`
+  - `scipy`
+  - `IPython`
 
 ## Usage
-1. Modify the username, password, and dsn values to connect to your Oracle database.
+1. Modify the `username`, `password`, and `dsn` values to connect to your Oracle database.
 2. Define the columns you wish to analyze (both string and numerical).
 3. Run the script. It will display:
-     Rare values for string columns.
-     Outliers in numerical columns.
-     Invalid (non-numeric) entries in numerical columns.
+   - Rare values for string columns.
+   - Outliers in numerical columns.
+   - Invalid (non-numeric) entries in numerical columns.
 
 ## Example Output
-Rare values: 
-  For a string column: A list of values that occur less than 5 times.
-Outliers:
-  For numerical columns: Detected values that fall outside the defined statistical bounds.
+
+**Rare values:**  
+For a string column, the program outputs a list of values that occur fewer than 5 times, along with their occurrence count.
+
+**Outliers:**  
+For numerical columns, the program applies Grubbs' test to detect outliers. The output shows the calculated Grubbs statistic, the critical value, and a conclusion on whether an outlier is present.
 
 ## Conclusion
-This tool helps in identifying and cleaning outliers and invalid values in the database, improving the quality of the data for further analysis and modeling.
+
+This script assists in identifying rare categorical values and statistical outliers in numerical columns directly from the database. By detecting these anomalies, the tool helps improve the accuracy and quality of datasets, making them more suitable for further analysis, reporting, and modeling tasks.
