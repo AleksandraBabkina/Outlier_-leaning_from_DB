@@ -1,4 +1,4 @@
-# Outlier_Cleaning_from_DB
+# Outlier_cleaning_from_DB
 
 ## Description
 This program is designed to detect and analyze outliers and rare values in both categorical (string) and numerical columns of an Oracle database table. It retrieves data, identifies infrequent values, and applies statistical methods to detect outliers, providing a clear overview for further data cleansing and quality improvement.
